@@ -1,6 +1,10 @@
 Docker RabbitMQ Example
 =======================
 
+Forked from https://github.com/dmaze/docker-rabbitmq-example
+- Upgraded to python3 and latest version of rabbitmq
+- Updated the publisher and consumer code to handle auto-reconnection, as the rabbitmq node might take sometime to be ready, and publisher and consumer need to retry connection several times. (the updated code are copied from pika offical examples https://github.com/pika/pika/tree/master/examples)
+
 **TL;DR:**
 [Install Docker](https://docs.docker.com/engine/installation/), then
 run `docker-compose up`.  Control-C will cleanly stop everything.
