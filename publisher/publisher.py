@@ -6,6 +6,8 @@ import logging
 import json
 import pika
 import os
+from datetime import datetime
+import random
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) '
               '-35s %(lineno) -5d: %(message)s')
@@ -269,12 +271,14 @@ class ExamplePublisher(object):
 
     def schedule_next_message(self):
         """If we are not closing our connection to RabbitMQ, schedule another
-        message to be delivered in PUBLISH_INTERVAL seconds.
+        message to be delivered in random seconds.
 
         """
+        waittime = random.randint(1, 5)
+
         LOGGER.info('Scheduling next message for %0.1f seconds',
-                    self.PUBLISH_INTERVAL)
-        self._connection.ioloop.call_later(self.PUBLISH_INTERVAL,
+                    waittime)
+        self._connection.ioloop.call_later(waittime,
                                            self.publish_message)
 
     def publish_message(self):
@@ -299,7 +303,10 @@ class ExamplePublisher(object):
             content_type='application/json',
             headers=hdrs)
 
-        message = u'مفتاح قيمة 键 值 キー 値'
+        now = datetime.now()
+        timestamp = datetime.timestamp(now)
+        
+        message = str(timestamp)
         self._channel.basic_publish(self.EXCHANGE, self.ROUTING_KEY,
                                     json.dumps(message, ensure_ascii=False),
                                     properties)
