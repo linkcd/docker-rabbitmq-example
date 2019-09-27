@@ -7,8 +7,6 @@
 # 'docker build -t consumer .', and then you can manually run
 # 'docker run --rm -e AMQP_URL=... consumer' to run it.
 
-# This is based on the Python 2.7 Alpine Linux image.  See
-# https://hub.docker.com/_/python/ for details on this image.
 FROM python:3-alpine
 
 # Our requirements are minimal, but it's good practice to install them

@@ -32,9 +32,7 @@ services:
       - network
 
   consumer:
-    # If needed, Docker Compose will automatically run consumer/Dockerfile.
-    build: consumer
-
+    image: 'linkcd/rabbitmq-consumer:latest'
     # Environment variables:
     environment:
       # The location of the RabbitMQ server.  "amqp" is the protocol;
@@ -49,8 +47,7 @@ services:
       - network
 
   publisher:
-    # Identical to the consumer.
-    build: publisher
+    image: 'linkcd/rabbitmq-publisher:latest'
     environment:
       AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
     networks:
