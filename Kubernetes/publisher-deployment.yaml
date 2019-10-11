@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-publisher-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels: #for deployment to find which pods to apply
+      app: publisher
+  template:
+    metadata:
+      labels:
+        app: publisher
+    spec:
+      containers:
+      - name: publisher
+        image: linkcd/rabbitmq-publisher:latest
+        env:
+        - name: AMQP_URL
+          value: "amqp://user:guest@my-release-rabbitmq?connection_attempts=5&retry_delay=5"
+

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-consumer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels: #for deployment to find which pods to apply
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: linkcd/rabbitmq-consumer:latest
+        env:
+        - name: AMQP_URL
+          value: "amqp://user:guest@my-release-rabbitmq?connection_attempts=5&retry_delay=5"
+
